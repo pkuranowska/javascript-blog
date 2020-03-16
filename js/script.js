@@ -185,7 +185,7 @@ function tagClickHandler(event){
 
 function addClickListenersToTags(){
   /* find all links to tags */
-  const links = document.querySelectorAll('.post-tags');
+  const links = document.querySelectorAll('.post-tags a');
   console.log(links);
 
   /* START LOOP: for each link */
