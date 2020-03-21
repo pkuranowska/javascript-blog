@@ -213,9 +213,6 @@ function generateAuthors(){
   /* START LOOP: for every article: */
   for (let article of articles) {
 
-    /* make html variable with empty string */
-    let html = '';
-
     /* find author */
     const authorWrapper = article.querySelector(optArticleAuthorSelector);
     console.log(authorWrapper);
@@ -227,11 +224,8 @@ function generateAuthors(){
     /* generate HTML of the link */
     const linkHTML = 'by <a href="#author:' + articleAuthor + '">' + articleAuthor + '</a>';
     console.log(linkHTML);
-
-    /* add generated code to html variable */
-    html = html + linkHTML;
     
-    /* insert HTML of all the links into the tags wrapper */
+    /* insert HTML of all the links into the authors wrapper */
     authorWrapper.innerHTML = linkHTML;
 
   /* END LOOP: for every article: */
