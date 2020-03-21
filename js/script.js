@@ -222,11 +222,11 @@ function generateAuthors(){
     console.log(articleAuthor);
 
     /* generate HTML of the link */
-    const linkHTML = 'by <a href="#author:' + articleAuthor + '">' + articleAuthor + '</a>';
+    const linkHTML = '<a href="#author:' + articleAuthor + '">' + articleAuthor + '</a>';
     console.log(linkHTML);
     
     /* insert HTML of all the links into the authors wrapper */
-    authorWrapper.innerHTML = linkHTML;
+    authorWrapper.innerHTML = 'by ' + linkHTML;
 
   /* END LOOP: for every article: */
   }
@@ -249,11 +249,11 @@ function authorClickHandler(event){
   console.log(href);
 
   /* make a new constant "author" and extract author from the "href" constant */
-  const author = href.replace('#','');
+  const author = href.replace('#author-','');
   console.log(author);
 
   /* find all author links with class active */
-  const authorLinks = document.querySelectorAll('a.active[href^="#author:"]');
+  const authorLinks = document.querySelectorAll('a.active[href^="#author-"]');
   console.log(authorLinks);
 
   /* START LOOP: for each active author link */
@@ -262,23 +262,23 @@ function authorClickHandler(event){
     /* remove class active */
     authorLink.classList.remove('active');
 
-  /* END LOOP: for each active tag link */
+  /* END LOOP: for each active author link */
   }
 
   /* find all author links with "href" attribute equal to the "href" constant */
   const hrefAuthorLinks = document.querySelectorAll('a[href="' + href + '"]');
   console.log(hrefAuthorLinks);
 
-  /* START LOOP: for each found tag link */
+  /* START LOOP: for each found author link */
   for (let hrefAuthorLink of hrefAuthorLinks) {
 
     /* add class active */
     hrefAuthorLink.classList.add('active');
 
-  /* END LOOP: for each found tag link */
+  /* END LOOP: for each found author link */
   }
 
-  /* execute function "generateTitleLinks" with article selector as argument */
+  /* execute function "generateTitleLinks" with an argument */
   generateTitleLinks('[data-author="' + author + '"]');
 }
 
@@ -290,7 +290,7 @@ function addClickListenersToAuthors(){
   /* START LOOP: for each link */
   for (let authorlink of authorLinks) {
   
-    /* add tagClickHandler as event listener for that link */
+    /* add authorClickHandler as event listener for that link */
     authorlink.addEventListener('click', authorClickHandler);
     console.log(authorlink);
 
