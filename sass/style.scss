@@ -118,3 +118,28 @@ body {
     margin: 0 10px 0 0;
   }
 }
+
+.sidebar ul {
+  display: inline-block;
+}
+
+.sidebar .tags li {
+  display: inline-block;
+  .tag-size-1 {
+    font-size: 13px;
+    margin: 7px;
+  }
+  .tag-size-2 {
+    font-size: 20px;
+    margin: 7px;
+  }
+  .tag-size-3 {
+    font-size: 30px;
+    margin: 7px;
+  }
+  .tag-size-4 {
+    font-size: 40px;
+    margin: 7px;
+  }
+ 
+}

@@ -4,9 +4,9 @@ const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
   optArticleTagsSelector = '.post-tags .list',
-  optArticleAuthorSelector = '.post-author';
-  /*optCloudClassCount = 5,
-  optCloudClassPrefix = 'tag-size-';*/
+  optArticleAuthorSelector = '.post-author',
+  optCloudClassCount = 5,
+  optCloudClassPrefix = 'tag-size-';
 
 function titleClickHandler(event) {
   event.preventDefault();
@@ -95,8 +95,8 @@ generateTitleLinks();
 
 function calculateTagsParams(tags) {
   const params = { max: 0, min: 999999 };
-  
-  for(let tag in tags) {
+
+  for (let tag in tags) {
     console.log(tag + ' is used ' + tags[tag] + 'times');
     params.max = Math.max(tags[tag], params.max);
     params.min = Math.min(tags[tag], params.min);
@@ -105,9 +105,14 @@ function calculateTagsParams(tags) {
   return params;
 }
 
-/*function calculateTagClass(count, params){
+function calculateTagClass(count, params) {
+  const normalizedCount = count - params.min;
+  const normalizedMax = params.max - params.min;
+  const percentage = normalizedCount / normalizedMax;
+  const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1);
 
-}*/
+  return (optCloudClassPrefix, classNumber);
+}
 
 function generateTags() {
   /* [NEW] create a new variable allTags with an empty object */
@@ -162,7 +167,8 @@ function generateTags() {
   }
   /* [NEW] find list of tags in right column */
   const tagList = document.querySelector('.tags');
-
+  console.log(tagList);
+  
   const tagsParams = calculateTagsParams(allTags);
   console.log('tagsParams:', tagsParams);
 
@@ -172,14 +178,13 @@ function generateTags() {
   /* [NEW] START LOOP: for each tag in allTags */
   for (let tag in allTags) {
     /* [NEW] generate code of a link and add it to allTagsHTML */
-    allTagsHTML += '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+    allTagsHTML += '<li><a class="' + optCloudClassPrefix + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + '</a></li>';
+    console.log(allTagsHTML);
   }
   /* [NEW] END LOOP: for each tag in allTags: */
 
   /* [NEW] add html from allTagsHTML to tagList */
   tagList.innerHTML = allTagsHTML;
-
-  console.log(allTags['cactus']);
 }
 
 generateTags();
