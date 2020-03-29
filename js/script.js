@@ -7,6 +7,7 @@ const optArticleSelector = '.post',
   optArticleAuthorSelector = '.post-author',
   optCloudClassCount = 5,
   optCloudClassPrefix = 'tag-size-';
+  /* optAuthorsListSelector = '.authors'; /* po co jest ta stała? */
 
 function titleClickHandler(event) {
   event.preventDefault();
@@ -117,7 +118,7 @@ function calculateTagClass(count, params) {
 function generateTags() {
   /* [NEW] create a new variable allTags with an empty object */
   let allTags = {};
-
+  console.log(allTags);
   /* find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
 
@@ -143,7 +144,7 @@ function generateTags() {
     for (let tag of articleTagsArray) {
       console.log(tag);
 
-      /* generate HTML of the link */
+      /* generate HTML of the link */ /*???jaka jest roznica miedzy generowaniem tego linku a linku allTagsHTML +=? Po co znak +=???? */
       const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
       console.log(linkHTML);
       /* add generated code to html variable */
@@ -168,7 +169,7 @@ function generateTags() {
   /* [NEW] find list of tags in right column */
   const tagList = document.querySelector('.tags');
   console.log(tagList);
-  
+
   const tagsParams = calculateTagsParams(allTags);
   console.log('tagsParams:', tagsParams);
 
@@ -177,7 +178,7 @@ function generateTags() {
 
   /* [NEW] START LOOP: for each tag in allTags */
   for (let tag in allTags) {
-    /* [NEW] generate code of a link and add it to allTagsHTML */
+    /* [NEW] generate code of a link and add it to allTagsHTML */ /*dlaczego znak +=? */
     allTagsHTML += '<li><a class="' + optCloudClassPrefix + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + '</a></li>';
     console.log(allTagsHTML);
   }
@@ -255,7 +256,11 @@ function addClickListenersToTags() {
 addClickListenersToTags();
 
 /* add author to article */
+
 function generateAuthors() {
+  /* [NEW] create a new variable allAuthors with an empty object */
+  let allAuthors = {};
+  console.log(allAuthors);
 
   /* find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
@@ -279,7 +284,29 @@ function generateAuthors() {
     authorWrapper.innerHTML = 'by ' + linkHTML;
 
     /* END LOOP: for every article: */
+    if (!Object.prototype.hasOwnProperty.call(allAuthors, articleAuthor)) {
+      /* add author to allAuthors object */
+      allAuthors[articleAuthor] = 1;
+    } else {
+      allAuthors[articleAuthor]++;
+    }
   }
+  /* find list of authors in right column */
+  const authorList = document.querySelector('.authors');
+  console.log(authorList);
+
+  /* create variable for all links html code */
+  let allAuthorsHTML = '';
+
+  /* START LOOP: for each articleAuthor in allAuthors */ /* nazwa zmiennej author czy articleAuthor??? jak lepiej? */
+  for (let author in allAuthors) {
+    /* generate code of a link and add it to allAuthorsHTML */
+    allAuthorsHTML += '<li><a href="#author-' + author + '">' + author + ' (' + allAuthors[author] + ')</a></li>';
+    /* END LOOP: for each author in allAuthors */
+  }
+
+  /* add html from allAuthorsHTML to authorList */
+  authorList.innerHTML = allAuthorsHTML;
 }
 
 generateAuthors();
